@@ -1,32 +1,34 @@
-const employees = [
-  { name: "John", age: 30, department: "IT" },
-  { name: "Alice", age: 28, department: "HR" },
-  { name: "Bob", age: 25, department: "IT" },
-  { name: "Charlie", age: 32, department: "Finance" }
-];
+const cities = [
+    { name: "Chicago", population: 2716000 },
+    { name: "New York", population: 8419000 },
+    { name: "Los Angeles", population: 3980000 },
+    { name: "Houston", population: 2328000 }
+  ];
 
-let departmentList = {};
-  for (let i=0; i<employees.length ;i++) {
-    let currentObject=employees[i]
-    let departmentName=currentObject.department
-    if(departmentList[departmentName]===undefined){
-       departmentList[departmentName]=[];
+/*
+const populationList = cities.reduce((popList,city)=>{
+
+    if(popList.length===0){
+    popList.push(city)
+        return popList;
     }
     
-    departmentList[departmentName].push(currentObject);
-    
-    
-  }
-console.log(departmentList)
+    for(let i=0 ; i<popList.length ; i++) {
+        if(city.population>popList[i].population){
+            popList.splice(i+1,0,city);
+            return popList;
+        }
+        }
+        
 
-
-
-let departmentLists=employees.reduce((employeeList,employee) => {
-  if (employeeList[employee.department]===undefined){
-    employeeList[employee.department]=[];
-  } 
-  employeeList[employee.department].push(employee)
-  return employeeList
+popList.unshift(city)
+return popList;
 }, [])
-console.log(departmentLists)
 
+console.log(populationList) */
+
+const popList=cities.sort((preNumber,nextNumber)=>{
+return preNumber.population-nextNumber.population
+})
+
+console.log(popList)
