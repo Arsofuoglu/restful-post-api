@@ -1,8 +1,9 @@
 const cities = [
-    { name: "Chicago", population: 2716000 },
-    { name: "New York", population: 8419000 },
-    { name: "Los Angeles", population: 3980000 },
-    { name: "Houston", population: 2328000 }
+    {name: "Chicago", population: 2716000},
+    {name: "New York", population: 8419000},
+    {name: "Los Angeles", population: 3980000},
+    {name: "Houston",population: 2328000},
+    {name: "Burak", population:2328000}
   ];
 
 
