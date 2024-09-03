@@ -5,7 +5,7 @@ const cities = [
     { name: "Houston", population: 2328000 }
   ];
 
-/*
+
 const populationList = cities.reduce((popList,city)=>{
 
     if(popList.length===0){
@@ -25,10 +25,13 @@ popList.unshift(city)
 return popList;
 }, [])
 
-console.log(populationList) */
+console.log(populationList)
 
-const popList=cities.sort((preNumber,nextNumber)=>{
+
+
+
+const popListWithSort=cities.sort((preNumber,nextNumber)=>{
 return preNumber.population-nextNumber.population
 })
 
-console.log(popList)
+console.log(popListWithSort)
