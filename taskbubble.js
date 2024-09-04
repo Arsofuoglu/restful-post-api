@@ -7,7 +7,7 @@ const cities = [
   ];
 
   for (let i=0;i<cities.length;i++){
-    for(let j=0;j<cities.length-1;j++){
+    for(let j=0;j<cities.length-1-i;j++){
         if(cities[j].population>cities[j+1].population){
             let temp=cities[j]
             cities[j]=cities[j+1]
