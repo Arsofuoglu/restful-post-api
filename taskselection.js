@@ -24,22 +24,5 @@ const cities = [
 }
 console.log(cities)
 
-    // let currentObject=cities[i]
-    // let currentPopulation=currentObject.population
-    // let considerArray = cities.slice(i+1)
-    // let minNumbers = considerArray.reduce((minNumber,comparedNumber) =>{
-    //     minNumber=considerArray[0]
-    //     let comparedObject=comparedNumber.population
-    //     let minObject=minNumber.population
-    //     if(minObject>comparedObject){
-    //         return comparedNumber
-    //     }
-    // },)
-    // console.log(minNumbers)
-    //    let minIndex = cities.indexOf(minNumbers)
-    // if (currentPopulation>minNumbers.population){
-    //         cities.splice(minIndex,0,cities[i])
-    //         cities.splice(i,1)
-    //     }
-
+   
     
