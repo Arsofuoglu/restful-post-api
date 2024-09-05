@@ -26,16 +26,3 @@ const cities = [
 }
   }
 console.log(cities)
-
-
-// const newcities=cities
-// for(let i=0;i<newcities.length-1;i++){
-//     if(newcities[i].population=newcities[i+1].population){
-//         if(newcities[i+1].name.localeCompare(newcities[i].name)===-1){
-//         let temp=newcities[i+1]
-//         newcities[i+1]=newcities[i]
-//         newcities[i]=temp
-//     } 
-// }
-// }
-// console.log(newcities
