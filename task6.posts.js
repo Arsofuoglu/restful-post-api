@@ -1,4 +1,4 @@
-// 1.adım bir user arrayi var ve bu array random şekilde oluşturulan isimler ile doldurulacak.++
+// 1.adım bir user arrayi var ve bu array random şekilde oluşturulan isimler ile doldurulacak.
 const user = []
 const maxUser = 100;
 const characters = 'abcdefghjklmnopqrstuvwxyz'
@@ -13,9 +13,7 @@ const nameGenerator = () => {
 for (let i = 0; i < maxUser; i++) {
     user.push(nameGenerator())
 }
-//console.log(user)
-// 2.adım: bu user arrayi içinde bulunan isimler kullanılarak bir posts arrayi oluşturulacak. bu post array için bir örnek paylaşacam seninle
-
+// 2.adım: bu user arrayi içinde bulunan isimler kullanılarak bir posts arrayi oluşturulacak.
 const posts = []
 const newPost = (i) => {
     let randomMin = (Math.floor(Math.random() * maxUser))
@@ -54,18 +52,6 @@ const newPost = (i) => {
 for (let i = 0; i < maxUser; i++) {
     posts.push(newPost(i))
 }
-//console.log(posts)
-// const post = [
-//     {
-//         user: "john_doe",
-//         content: "My first post!",
-//         likes: ["alice", "bob", "charlie"],
-//         comments: [
-//             { user: "alice", comment: "Nice post!" },
-//             { user: "bob", comment: "Great job!" }
-//         ]
-//     }
-// ];
 // 3.adım bu oluşturulan post array içinde en çok beğeni yapan ve en çok yorum yapan kullanıcıları bulacaz.
 const allLikesNonFlat = []
 const allComments = []
@@ -87,8 +73,7 @@ const findMostCommentUser = () => {
             if (allComments[i].user === allComments[j].user) {
                 commentAmount++
             }
-            if (i == 0) { mostCommenteds = commentAmount }
-            if (i > 0 && mostCommenteds < commentAmount) {
+            if (mostCommenteds < commentAmount) {
                 mostCommenteds = commentAmount
                 mostCommentingUser = allComments[i].user
             }
@@ -97,8 +82,6 @@ const findMostCommentUser = () => {
     }
 return `${mostCommentingUser} with ${mostCommenteds} times `
 }
-
-//         likes: ["alice", "bob", "charlie"],
 const allLikes = allLikesNonFlat.flat()
 const findMostLikeUser = () => {
     let mostLikes = 0
@@ -111,8 +94,7 @@ const findMostLikeUser = () => {
             if (allLikes[i] === allLikes[j]) {
                 likesAmount++
             }
-            if (i == 0) { mostLikes = likesAmount }
-            if (i > 0 && mostLikes < likesAmount) {
+            if (mostLikes < likesAmount) {
                 mostLikes = likesAmount
                 mostLikingUser = allLikes[i]
             }
