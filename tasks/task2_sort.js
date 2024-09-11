@@ -26,9 +26,6 @@ popList.unshift(city)
 return popList;
 }, [])
 
-console.log(populationList)
-
-
 
 
 const popListWithSort=cities.sort((preNumber,nextNumber)=>{

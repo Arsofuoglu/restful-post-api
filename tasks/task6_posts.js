@@ -109,6 +109,4 @@ const findMostLikeUser = () => {
     return `${mostLikingUser} with ${mostLikes} times `
 }
 
-const finalPosts = `Most Liking User: ${findMostLikeUser()} \nMost Commenting User: ${findMostCommentUser()}`;
-
-module.exports = finalPosts;
+module.exports =`Most Liking User: ${findMostLikeUser()} \nMost Commenting User: ${findMostCommentUser()}`;
