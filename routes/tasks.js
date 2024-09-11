@@ -9,31 +9,30 @@ const selectionCities = require('../tasks/task3_selection')
 const popListWithSort = require('../tasks/task2_sort')
 const departmentLists = require('../tasks/task1_reduce')
 
-router.get("/", (req, res) => {
-    res.send("This is tasks tab");
-})
-router.get("/6", (req, res) => {
-    res.send(finalPostsWithHtml);
-})
 
-router.get("/5", (req, res) => {
-    res.send(finalOrders);
-})
-
-router.get("/4", (req, res) => {
-    res.send(bubbleCities);
-})
-
-router.get("/3", (req, res) => {
-    res.send(selectionCities);
-})
-
-router.get("/2", (req, res) => {
-    res.send(popListWithSort);
-})
-
-router.get("/1", (req, res) => {
-    res.send(departmentLists);
+//bu getleri bir router altında birleştir!!!!
+router.get("/:id", (req, res) => {
+    if(Number(req.params.id)===1){
+        res.send(departmentLists);
+    }
+    if(Number(req.params.id)===2){
+        res.send(popListWithSort);
+    }
+    if(Number(req.params.id)===3){
+        res.send(selectionCities);
+    }
+    if(Number(req.params.id)===4){
+        res.send(bubbleCities);
+    }
+    if(Number(req.params.id)===5){
+        res.send(finalOrders);
+    }
+    if(Number(req.params.id)===6){
+        res.send(finalPostsWithHtml);
+    }
+    else{       
+        res.send("Invalid Id");
+    }
 })
 
 module.exports = router
