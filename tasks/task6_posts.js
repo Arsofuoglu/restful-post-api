@@ -1,107 +1,116 @@
+//Posts verisine post servisi ile ekleme yapıp.body de gönder.tekrar get ile çağır.
 // 1.adım bir user arrayi var ve bu array random şekilde oluşturulan isimler ile doldurulacak.
 const user = []
-const maxUser = 5   ;
+const maxUser = 3;
 const characters = 'abcdefghjklmnopqrstuvwxyz'
-const nameGenerator = () => {
+const nameGenerator = (i) => {
+    let userKey = `user${i}`
     let name = ''
     let MaxNumber = (Math.random() * 5) + 2
     for (let i = 0; i < MaxNumber; i++) {
         name += characters.charAt(Math.floor(Math.random() * characters.length))
     }
-    return name
+    let username = { [userKey]: name }
+    return username
 }
 for (let i = 0; i < maxUser; i++) {
-    user.push(nameGenerator())
+    user.push(nameGenerator(i))
 }
+//console.log(user)
 // 2.adım: bu user arrayi içinde bulunan isimler kullanılarak bir posts arrayi oluşturulacak.
 const posts = []
-const newPost = (i) => {
-    let randomMin = (Math.floor(Math.random() * maxUser))
-    let randomMax = (Math.floor(Math.random() * maxUser))
-    if (randomMin > randomMax) {
-        let temp = randomMin;
-        randomMin = randomMax;
-        randomMax = temp;
+const newPost = () => {
+    let newMaxUser = user.length;
+    const randomMinMax = () => {
+        let randomMin = (Math.floor(Math.random() * newMaxUser))
+        let randomMax = (Math.floor(Math.random() * newMaxUser))
+        if (randomMin > randomMax) {
+            let temp = randomMin;
+            randomMin = randomMax;
+            randomMax = temp;
+        }
+        return [randomMin, randomMax]
     }
-    let randomPostUser = (Math.floor(Math.random() * i))
+
+    let randomPostUser = (Math.floor(Math.random() * newMaxUser))
     let post = {}
-    post.user = user[randomPostUser];
+    let userKey = `user${randomPostUser}`
+    post.user = user[randomPostUser][userKey];
     post.content = 'new content'
+
     post.likes = [];
-    
-    for (let j = randomMin; j < randomMax; j++) {
-        post.likes.push(user[j])
-        
+    for (let j = randomMinMax()[0]; j < randomMinMax()[1]; j++) {
+        post.likes.push(Object.values(user[j]))
+
     }
-    
-    randomMin = (Math.floor(Math.random() * maxUser))
-    randomMax = (Math.floor(Math.random() * maxUser))
-    if (randomMin > randomMax) {
-        let temp = randomMin;
-        randomMin = randomMax;
-        randomMax = temp;
-    }
+
     post.comments = [];
-    for (let j = randomMin; j < randomMax; j++) {
-        
-        post.comments.push({ user: user[j], comment: 'Nice User' })
+    for (let j = randomMinMax()[0]; j < randomMinMax()[1]; j++) {
+        post.comments.push({ user: Object.values(user[j]), comment: 'Nice User' })
     }
 
     return post
 }
 for (let i = 0; i < maxUser; i++) {
-    posts.push(newPost(i))
+    posts.push(newPost())
 }
 // 3.adım bu oluşturulan post array içinde en çok beğeni yapan ve en çok yorum yapan kullanıcıları bulacaz.
-const allLikesNonFlat = []
+const allLikes = []
 const allComments = []
 for (let i = 0; i < posts.length; i++) {
-    allLikesNonFlat.push(posts[i].likes)
-    for (let j = 0; j < posts[i].comments.length; j++) {
-        allComments.push(posts[i].comments[j])
+    for (let j = 0; j < posts[i].comments.length+posts[i].likes.length; j++) {
+        if(posts[i].comments[j]!==undefined){
+            allComments.push(posts[i].comments[j].user)
+        }
+        
+        if(posts[i].likes[j]!==undefined){
+            allLikes.push(posts[i].likes[j])
+        }
+        
     }
 }
-
 const findMostCommentUser = () => {
     let mostCommenteds = 0
     let mostCommentingUser = null
 
     for (let i = 0; i < allComments.length; i++) {
-        let commentAmount = 0
+        let commentAmount = 1
         for (let j = i + 1; j < allComments.length; j++) {
 
-            if (allComments[i].user === allComments[j].user) {
+            if (allComments[i][0] === allComments[j][0]) {
                 commentAmount++
             }
-            // if(mostCommenteds==commentAmount){
-            //     if(allComments[i].user.localeCompare(mostCommentingUser)===-1){
-            //         mostCommentingUser = allComments[i].user
-
-            // }
             if (mostCommenteds < commentAmount) {
                 mostCommenteds = commentAmount
-                mostCommentingUser = allComments[i].user
+                mostCommentingUser = allComments[i][0]
             }         
+            if (mostCommenteds==commentAmount && allComments[i][0]<mostCommentingUser){
+                mostCommentingUser=allComments[i][0]
+
+            }
         }
     }
     
 return `${mostCommentingUser} with ${mostCommenteds} times `
 }
-const allLikes = allLikesNonFlat.flat()
 const findMostLikeUser = () => {
     let mostLikes = 0
     let mostLikingUser = null
 
     for (let i = 0; i < allLikes.length; i++) {
-        let likesAmount = 0
+        let likesAmount = 1
         for (let j = i + 1; j < allLikes.length; j++) {
 
-            if (allLikes[i] === allLikes[j]) {
+            if (allLikes[i][0] === allLikes[j][0]) {
                 likesAmount++
             }
             if (mostLikes < likesAmount) {
                 mostLikes = likesAmount
-                mostLikingUser = allLikes[i]
+                mostLikingUser = allLikes[i][0]
+            }
+            if (mostLikes==likesAmount && allLikes[i][0]<mostLikingUser){
+                mostLikingUser=allLikes[i][0]
+
             }
         }
 
@@ -109,4 +118,12 @@ const findMostLikeUser = () => {
     return `${mostLikingUser} with ${mostLikes} times `
 }
 
-module.exports =`Most Liking User: ${findMostLikeUser()} \nMost Commenting User: ${findMostCommentUser()}`;
+const finalExport = [`Most Liking User: ${findMostLikeUser()} 
+Most Commenting User: ${findMostCommentUser()}`]
+
+module.exports = {findMostLikeUser,findMostCommentUser,newPost,posts,user,finalExport}
+// console.log(posts)
+// console.log(allLikes)
+// console.log(allComments)
+// console.log(finalExport)
+//Posts verisine post servisi ile ekleme yapıp.body de gönder.tekrar get ile çağır.

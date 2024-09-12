@@ -1,38 +1,56 @@
 const express = require('express')
 const router = express.Router()
 
-const finalPosts = require('../tasks/task6_posts');
-const finalOrders = require('../tasks/task5_orders');
-const finalPostsWithHtml = finalPosts.replace(/\n/g, '<br>');
+const {findMostLikeUser,findMostCommentUser,newPost, posts, user, finalExport } = require('../tasks/task6_posts');
+const orders = require('../tasks/task5_orders');
 const bubbleCities = require('../tasks/task4_bubble')
 const selectionCities = require('../tasks/task3_selection')
 const popListWithSort = require('../tasks/task2_sort')
 const departmentLists = require('../tasks/task1_reduce')
 
+router.use(express.json()); // JSON verilerini parse etmek için gerekli(jsonu programın anlayacağı hale getir)
 
-//bu getleri bir router altında birleştir!!!!
-router.get("/:id", (req, res) => {
-    if(Number(req.params.id)===1){
-        res.send(departmentLists);
+let newUserId = user.length
+router.post("/post", (req, res, next) => {
+
+    for (let i = 0; i < req.body.user.length; i++) {
+        let newUser = req.body.user[i]
+        let newKey = `user${newUserId}`;
+        let newObject = { [newKey]: newUser };
+        user.push(newObject);
+        newUserId++
     }
-    if(Number(req.params.id)===2){
-        res.send(popListWithSort);
+    for (let i = 0; i < req.body.user.length; i++) {
+        let newPosts = newPost(); 
+        posts.push(newPosts);
     }
-    if(Number(req.params.id)===3){
-        res.send(selectionCities);
-    }
-    if(Number(req.params.id)===4){
-        res.send(bubbleCities);
-    }
-    if(Number(req.params.id)===5){
-        res.send(finalOrders);
-    }
-    if(Number(req.params.id)===6){
-        res.send(finalPostsWithHtml);
-    }
-    else{       
-        res.send("Invalid Id");
-    }
+    res.json(user)
+    next()
 })
 
-module.exports = router
+router.get("/:id", (req, res) => {
+    switch (Number(req.params.id)){
+    case 1:
+        return res.send(departmentLists);
+    case 2:
+        return res.send(popListWithSort);  
+    case 3:
+        return res.send(selectionCities);  
+    case 4:
+        return res.send(bubbleCities);
+    case 5:
+        return res.send(orders);
+    case 6:
+        return res.json(finalExport);
+    case 7:
+        return res.send(user);
+    case 8:
+        return res.send(posts);
+    default:
+        return res.send("Invalid Id");
+    }
+    }
+)
+
+
+module.exports = router;
